@@ -1,50 +1,112 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:baldhead/models/space.dart';
+import 'package:xml/xml.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({
+  final Space space;
+  DetailScreen({
+    required this.space,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<DetailScreen> createState() => _DetailScreen11State();
+  State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _DetailScreen11State extends State<DetailScreen> {
+class _DetailScreenState extends State<DetailScreen> {
+  List<Map<String, String>> _spaces = [];
+  void boy_space() async {
+    var result = await Dio().get(
+      "https://www.youthcenter.go.kr/opi/wantedSpace.do?pageIndex=1&display=28&pageType=1&srchAreaCpvn=003002001&openApiVlak=687a1e8788e29f1525bf4c18", // 비밀
+    );
+    final spaceXml = result.data.toString();
+    final document = XmlDocument.parse(spaceXml);
+    final spaces = document.findAllElements('space');
+//map 메서드를 통해
+    final boyspace = spaces.map((node) {
+      final spcName = node.findElements('spcName').single.text;
+      final address = node.findElements('address').single.text;
+      final spcTime = node.findElements('spcTime').single.text;
+      final homepage = node.findElements('homepage').single.text;
+      final telNo = node.findElements('telNo').single.text;
+      final spcCost = node.findElements('spcCost').single.text;
+      final foodYn = node.findElements('foodYn').single.text;
+      final addFacilCost = node.findElements('addFacilCost').single.text;
+
+      return {
+        'spcName': spcName,
+        'address': address,
+        'spcTime': spcTime,
+        'homepage': homepage,
+        'telNo': telNo,
+        'spcCost': spcCost,
+        'foodYn': foodYn,
+        'addFacilCost': addFacilCost,
+      };
+    }).toList();
+
+    setState(() {
+      _spaces = boyspace;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    boy_space();
+  }
+
+  Map<String, String> findMatchingSpace() {
+    for (var fetchedSpace in _spaces) {
+      if (fetchedSpace['spcName'] == widget.space.title) {
+        return fetchedSpace;
+      }
+    }
+    return {}; // Return an empty map if no matching space is found
+  }
+
   @override
   Widget build(BuildContext context) {
+    final matchingSpace = findMatchingSpace();
+    //widget.spaces.firstWhere((s) => s['spcName'] == widget.space.title);
+    //final args = ModalRoute.of(context)?.settings.arguments
+    //as Space; // find the matching space
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('대머리청년'),
-      ),
       body: Column(
         children: [
-          Image.asset('images/raw/list_img_01.jpeg'),
+          SizedBox(
+            width: 400,
+            height: 200,
+            child: Image.asset(widget.space.image, fit: BoxFit.cover),
+          ),
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(10),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'spcTime',
+                      widget.space.title,
                       style: TextStyle(fontSize: 18),
                     ),
                     Text(
-                      'spcCost',
+                      //(matchingSpace['address']
+                      matchingSpace['address'] ?? 'Default Address',
                       style: TextStyle(fontSize: 10),
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
                 width: MediaQuery.of(context).size.width * 0.2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -56,22 +118,22 @@ class _DetailScreen11State extends State<DetailScreen> {
               )
             ],
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(20),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
+            padding: EdgeInsets.symmetric(horizontal: 50),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   children: [
                     Icon(Icons.abc),
-                    Text('homepage'),
+                    Text(matchingSpace['addFacilCost'] ?? 'Default Address'),
                   ],
                 ),
                 Column(
-                  children: const [
+                  children: [
                     Icon(Icons.abc),
                     Text('전화'),
                   ],
@@ -79,7 +141,7 @@ class _DetailScreen11State extends State<DetailScreen> {
                 Column(
                   children: [
                     Icon(Icons.abc),
-                    Text('spcCost'),
+                    Text(matchingSpace['foodYn'] ?? 'Default Address'),
                   ],
                 ),
               ],
@@ -103,11 +165,12 @@ class _DetailScreen11State extends State<DetailScreen> {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.2,
-                      child: Text('foodYn'),
+                      child: Text('운영시간'),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
-                      child: const Text('asdsad'),
+                      child:
+                          Text(matchingSpace['spcTime'] ?? 'Default Address'),
                     ),
                   ],
                 ),
@@ -122,7 +185,7 @@ class _DetailScreen11State extends State<DetailScreen> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
-                      child: const Text('asdsad'),
+                      child: Text('asdsad'),
                     ),
                   ],
                 ),

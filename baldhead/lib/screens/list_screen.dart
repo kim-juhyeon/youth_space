@@ -4,7 +4,7 @@ import 'package:baldhead/repositories/space_repository.dart';
 import 'package:baldhead/models/space.dart';
 
 class ListScreen extends StatelessWidget {
-  ListScreen({super.key});
+  ListScreen({Key? key}) : super(key: key);
 
   final List<Space> spaces = SpaceRepository().getSpaces();
 
@@ -42,7 +42,7 @@ class SpaceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      dense: true,
+      dense: true, //listtitle의 밀집여부
       visualDensity: const VisualDensity(vertical: 4),
       // tileColor: Colors.amber,
       title: Text(
@@ -55,13 +55,16 @@ class SpaceTile extends StatelessWidget {
       ),
       leading: Image.asset(space.image),
       trailing: const Icon(
+        //title,subtiltle의 간격조절
         Icons.arrow_forward_ios,
-        size: 15,
+        size: 16,
         color: Color.fromARGB(255, 201, 201, 201),
       ),
       onTap: () {
-        debugPrint("Actions");
-        Navigator.of(context).pushNamed('detail');
+        Navigator.of(context).pushNamed(
+          '/detail',
+          arguments: space,
+        );
       },
     );
   }

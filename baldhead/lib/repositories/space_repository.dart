@@ -48,7 +48,7 @@ class SpaceRepository {
         description: '',
         image: 'images/processed/list_img_09_80.png'),
     Space(
-        title: '서울청년센터 관악오랑',
+        title: '서울청년센터 관악오랑 청년문화공간 신림동쓰리룸',
         subtitle: '서울 관악구',
         description: '',
         image: 'images/processed/list_img_10_80.png'),

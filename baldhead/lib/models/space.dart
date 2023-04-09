@@ -11,4 +11,6 @@ class Space {
     required this.description,
     required this.image,
   });
+
+  // static firstWhere(bool Function(dynamic s) param0) {}
 }

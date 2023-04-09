@@ -1,29 +1,30 @@
-// ignore: unused_import
-import 'package:baldhead/screens/detail_screen.dart';
-import 'package:baldhead/screens/list_screen.dart';
+import 'package:baldhead/screens/second_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:baldhead/screens/list_screen.dart';
+
+import 'models/space.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Book List App',
-        initialRoute: '/',
-        routes: {
-          '/': (context) => ListScreen(),
-          'detail': (context) => const DetailScreen(),
+      title: 'BaldHead Demo',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => ListScreen(),
+        '/detail': (context) {
+          //새화면 DetailScreen으로 이동할 때 경로에 전달 된 인수에 엑세스할 수 있게 ModalRoute 위젯이용
+          final args = ModalRoute.of(context)?.settings.arguments as Space;
+          //DetailScreen에서 space 매개변수를 받아 정보를 표시 할 수 있음
+          return DetailScreen(space: args);
         },
-        theme: ThemeData(
-          scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          appBarTheme: const AppBarTheme(
-            color: Color.fromARGB(255, 255, 255, 255),
-          ),
-        ));
+      },
+    );
   }
 }
