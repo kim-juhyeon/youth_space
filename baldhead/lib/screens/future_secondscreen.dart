@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:baldhead/models/space.dart';
 import 'package:xml/xml.dart';
 
+import '../models/xml_parse.dart';
+
 class DetailScreen extends StatefulWidget {
   final Space space;
   DetailScreen({
@@ -24,30 +26,9 @@ class _DetailScreenState extends State<DetailScreen> {
     final spaceXml = result.data.toString();
     final document = XmlDocument.parse(spaceXml);
     final spaces = document.findAllElements('space');
-
-    final boyspace = spaces.map((node) {
-      final spcName = node.findElements('spcName').single.text;
-      final address = node.findElements('address').single.text;
-      final spcTime = node.findElements('spcTime').single.text;
-      final homepage = node.findElements('homepage').single.text;
-      final telNo = node.findElements('telNo').single.text;
-      final spcCost = node.findElements('spcCost').single.text;
-      //불러온 데이터에 noise가 껴있음;;
-      final foodYn =
-          node.findElements('foodYn').single.text.replaceAll(']]>', '').trim();
-      final addFacilCost = node.findElements('addFacilCost').single.text;
-
-      return {
-        'spcName': spcName,
-        'address': address,
-        'spcTime': spcTime,
-        'homepage': homepage,
-        'telNo': telNo,
-        'spcCost': spcCost,
-        'foodYn': foodYn,
-        'addFacilCost': addFacilCost,
-      };
-    }).toList();
+    XmlParse xmlParse = XmlParse(); // Create an instance of the XmlParse class
+    final boyspace =
+        xmlParse.parseSpaces(spaces); // Call the parseSpaces method
 
     return boyspace;
   }
@@ -71,6 +52,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        //future 빌드를 진행하여 빌드가 될때까지 기다린다.
         child: FutureBuilder<List<Map<String, String>>>(
           future: _spaces,
           builder: (context, snapshot) {
