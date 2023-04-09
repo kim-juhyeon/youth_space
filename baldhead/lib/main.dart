@@ -1,4 +1,4 @@
-import 'package:baldhead/screens/second_screen.dart';
+import 'package:baldhead/screens/future_secondscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:baldhead/screens/list_screen.dart';
 
