@@ -43,7 +43,7 @@ class SpaceRepository {
         description: '',
         image: 'images/processed/list_img_08_80.png'),
     Space(
-        title: '서울 청년센터 동대문오랑',
+        title: '서울청년센터 동대문오랑',
         subtitle: '서울 동대문구',
         description: '',
         image: 'images/processed/list_img_09_80.png'),

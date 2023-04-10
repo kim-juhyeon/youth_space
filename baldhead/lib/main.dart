@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:baldhead/screens/list_screen.dart';
 
 import 'models/space.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,9 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BaldHead Demo',
-      initialRoute: '/',
+      initialRoute: '/home',
       routes: {
-        '/': (context) => ListScreen(),
+        '/home': (context) => HomeScreen(),
+        '/list': (context) => ListScreen(),
         '/detail': (context) {
           //새화면 DetailScreen으로 이동할 때 경로에 전달 된 인수에 엑세스할 수 있게 ModalRoute 위젯이용
           final args = ModalRoute.of(context)?.settings.arguments as Space;

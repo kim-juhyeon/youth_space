@@ -1,8 +1,9 @@
+import 'package:baldhead/screens/view/gesture_screen.dart';
+import 'package:baldhead/screens/view/row_creen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:baldhead/models/space.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -128,51 +129,8 @@ class _DetailScreenState extends State<DetailScreen> {
                               },
                               child: FaIcon(FontAwesomeIcons.phone),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext contex) {
-                                      return AlertDialog(
-                                        title: Text('청년공간 홈페이지입니다.'),
-                                        content: Text('홈페이지로 들어갑니다~ 꽉 잡으세요.'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text('취소'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () async {
-                                              final url = matchingSpace?[
-                                                      'homepage'] ??
-                                                  'https://www.naroo.or.kr/';
-                                              await FlutterWebBrowser
-                                                  .openWebPage(
-                                                      url: url,
-                                                      customTabsOptions:
-                                                          CustomTabsOptions(
-                                                        colorScheme:
-                                                            CustomTabsColorScheme
-                                                                .dark,
-                                                        showTitle: true,
-                                                        urlBarHidingEnabled:
-                                                            true,
-                                                      ));
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text('move'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                                child: FaIcon(FontAwesomeIcons.houseChimney),
-                              ),
+                            Gesture_Screen(
+                              matchingSpace: matchingSpace,
                             )
                           ],
                         ),
@@ -221,50 +179,9 @@ class _DetailScreenState extends State<DetailScreen> {
                   const Padding(
                     padding: EdgeInsets.all(10),
                   ),
-                  Container(
-                    child: Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
-                              child: Text('운영시간'),
-                            ),
-                            Expanded(
-                              child: Text(
-                                matchingSpace?['spcTime'] ?? 'Default Address',
-                                style: TextStyle(fontSize: 12),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 10,
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
-                              child: Text('장소정보'),
-                            ),
-                            Expanded(
-                              child: Text(
-                                matchingSpace?['majorForm'] ??
-                                    'Default Address',
-                                style: TextStyle(fontSize: 12),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ]),
-                  )
+                  RowScreen(
+                    matchingSpace: matchingSpace,
+                  ),
                 ],
               );
             } else {
