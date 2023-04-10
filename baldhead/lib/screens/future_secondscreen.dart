@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:baldhead/models/space.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:xml/xml.dart';
 
 import '../models/xml_parse.dart';
@@ -96,12 +100,83 @@ class _DetailScreenState extends State<DetailScreen> {
                         width: MediaQuery.of(context).size.width * 0.2,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Icon(Icons.heart_broken),
-                            Icon(Icons.pause_presentation),
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Clipboard.setData(
+                                  ClipboardData(
+                                    text: matchingSpace?['telNo'] ?? 'Default',
+                                  ),
+                                );
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('전화번호가 복사 되었습니다.'),
+                                      content: Text('대머리청년을 찾아 주셔서 감사합니다.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('복사'),
+                                        )
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              child: FaIcon(FontAwesomeIcons.phone),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext contex) {
+                                      return AlertDialog(
+                                        title: Text('청년공간 홈페이지입니다.'),
+                                        content: Text('홈페이지로 들어갑니다~ 꽉 잡으세요.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('취소'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
+                                              final url = matchingSpace?[
+                                                      'homepage'] ??
+                                                  'https://www.naroo.or.kr/';
+                                              await FlutterWebBrowser
+                                                  .openWebPage(
+                                                      url: url,
+                                                      customTabsOptions:
+                                                          CustomTabsOptions(
+                                                        colorScheme:
+                                                            CustomTabsColorScheme
+                                                                .dark,
+                                                        showTitle: true,
+                                                        urlBarHidingEnabled:
+                                                            true,
+                                                      ));
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('move'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: FaIcon(FontAwesomeIcons.houseChimney),
+                              ),
+                            )
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                   Padding(
@@ -138,7 +213,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
-                    height: 60,
+                    height: 30,
                     child: const Divider(
                       color: Colors.blue,
                     ),
