@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:baldhead/models/space.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:xml/xml.dart';
 
 import '../models/xml_parse.dart';
@@ -52,7 +53,6 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        //future 빌드를 진행하여 빌드가 될때까지 기다린다.
         child: FutureBuilder<List<Map<String, String>>>(
           future: _spaces,
           builder: (context, snapshot) {
@@ -114,21 +114,23 @@ class _DetailScreenState extends State<DetailScreen> {
                       children: [
                         Column(
                           children: [
+                            FaIcon(FontAwesomeIcons.building),
+                            Padding(padding: EdgeInsets.all(10)),
                             Text('공간 요금'),
                             Text(
-                                matchingSpace?['spcCost'] ?? 'Default Address'),
+                              matchingSpace?['spcCost'] ?? 'Default Address',
+                              style: TextStyle(fontSize: 12),
+                            ),
                           ],
                         ),
                         Column(
                           children: [
-                            Icon(Icons.abc),
-                            Text(matchingSpace?['foodYn'] ?? 'Default Address'),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Icon(Icons.abc),
-                            Text(matchingSpace?['foodYn'] ?? 'Default Address'),
+                            FaIcon(FontAwesomeIcons.droplet),
+                            Padding(padding: EdgeInsets.all(10)),
+                            Text(
+                              matchingSpace?['foodYn'] ?? 'Default Address',
+                              style: TextStyle(fontSize: 12),
+                            ),
                           ],
                         ),
                       ],
@@ -146,7 +148,9 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   Container(
                     child: Column(children: [
-                      Container(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -154,35 +158,42 @@ class _DetailScreenState extends State<DetailScreen> {
                               width: MediaQuery.of(context).size.width * 0.2,
                               child: Text('운영시간'),
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              child: Text(matchingSpace?['spcTime'] ??
-                                  'Default Address'),
+                            Expanded(
+                              child: Text(
+                                matchingSpace?['spcTime'] ?? 'Default Address',
+                                style: TextStyle(fontSize: 12),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      Container(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.2,
+                              child: Text('장소정보'),
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                            ),
+                            Expanded(
+                              child: Text(
+                                matchingSpace?['majorForm'] ??
+                                    'Default Address',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            )
                           ],
                         ),
-                      )
+                      ),
                     ]),
                   )
                 ],
               );
             } else {
-              return Center(
-                child: Text('Error loading data'),
-              );
+              return Center(child: Text('No data found'));
             }
           },
         ),

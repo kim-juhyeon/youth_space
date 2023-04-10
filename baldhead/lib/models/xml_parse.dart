@@ -11,6 +11,7 @@ class XmlParse {
       final homepage = node.findElements('homepage').single.text;
       final telNo = node.findElements('telNo').single.text;
       final spcCost = node.findElements('spcCost').single.text;
+      final majorForm = node.findElements('majorForm').single.text;
       //불러온 데이터에 noise가 껴있음;;
       final foodYn =
           node.findElements('foodYn').single.text.replaceAll(']]>', '').trim();
@@ -25,6 +26,7 @@ class XmlParse {
         'spcCost': spcCost,
         'foodYn': foodYn,
         'addFacilCost': addFacilCost,
+        'majorForm': majorForm,
       };
     }).toList();
 
