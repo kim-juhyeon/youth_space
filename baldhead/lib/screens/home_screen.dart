@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'home_screen/home_imgview.dart';
+import 'home_screen/home_module/switch.dart';
 import 'home_screen/home_wiget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,39 +12,32 @@ class HomeScreen extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double imageWidth = screenWidth;
 
-    return Container(
-      color: Colors.white,
-      padding: EdgeInsets.symmetric(
-        horizontal: 6.0,
-      ),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            '대머리청년',
-            style: TextStyle(color: Colors.black),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            backgroundColor: Colors.white,
+            title: Text(
+              '대머리청년',
+              style: TextStyle(color: Colors.black),
+            ),
+            floating: true,
           ),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ImgView(
-              imageWidth: imageWidth,
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 12.0),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                ImgView(
+                  imageWidth: imageWidth,
+                ),
+                SizedBox(height: 15.0),
+                SwitchHome(),
+                OthersWiget(),
+                SizedBox(height: 20.0),
+              ]),
             ),
-            SizedBox(height: 15.0),
-            Text(
-              '청년공간',
-            ),
-            SizedBox(height: 10.0),
-            OthersWiget(),
-            SizedBox(height: 20.0),
-            Text(
-              '청년공간',
-              style: TextStyle(fontSize: 12.0),
-            ),
-            SizedBox(height: 50.0),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

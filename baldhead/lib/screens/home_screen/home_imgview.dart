@@ -6,7 +6,8 @@ class ImgView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: 400,
       child: PageView(
         scrollDirection: Axis.horizontal,
         //crossAxisAlignment: CrossAxisAlignment.start,
