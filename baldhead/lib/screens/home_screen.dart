@@ -17,9 +17,13 @@ class HomeScreen extends StatelessWidget {
         slivers: <Widget>[
           SliverAppBar(
             backgroundColor: Colors.white,
+            centerTitle: true,
             title: Text(
               '대머리청년',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
             ),
             floating: true,
           ),
@@ -32,6 +36,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 15.0),
                 SwitchHome(),
+                SizedBox(height: 20.0),
                 OthersWiget(),
                 SizedBox(height: 20.0),
               ]),
