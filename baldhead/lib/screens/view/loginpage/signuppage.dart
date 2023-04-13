@@ -1,18 +1,16 @@
-import 'package:baldhead/screens/home_screen/login_page/my_button.dart';
-import 'package:baldhead/screens/home_screen/login_page/my_textfield.dart';
 import 'package:baldhead/screens/home_screen/login_page/square_tile.dart';
-import 'package:baldhead/screens/view/loginpage/signuppage.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class SignUpPage extends StatelessWidget {
+  SignUpPage({Key? key}) : super(key: key);
 
   // text editing controllers
-  final usernameController = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // sign user in method
-  void signUserIn() {}
+  // sign user up method
+  void signUserUp() {}
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +35,9 @@ class LoginPage extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  // welcome back, you've been missed!
+                  // sign up
                   Text(
-                    'Bald Boy',
+                    'Sign Up',
                     style: TextStyle(
                       fontFamily: "Mulish",
                       fontWeight: FontWeight.w800,
@@ -49,72 +47,41 @@ class LoginPage extends StatelessWidget {
 
                   const SizedBox(height: 50),
 
-                  // username textfield
-                  MyTextField(
-                    controller: usernameController,
-                    hintText: 'Username',
-                    obscureText: false,
+                  // name textfield
+                  TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      hintText: 'Name',
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // email textfield
+                  TextField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                    ),
                   ),
 
                   const SizedBox(height: 10),
 
                   // password textfield
-                  MyTextField(
+                  TextField(
                     controller: passwordController,
-                    hintText: 'Password',
                     obscureText: true,
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // forgot password?
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 20,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              'Forgot Password?',
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SignUpPage()),
-                                );
-                              },
-                              child: const Text(
-                                'Register now',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    decoration: InputDecoration(
+                      hintText: 'Password',
                     ),
                   ),
 
                   const SizedBox(height: 25),
 
-                  // sign in button
-                  MyButton(
-                    onTap: signUserIn,
+                  // sign up button
+                  ElevatedButton(
+                    onPressed: signUserUp,
+                    child: Text('Sign Up'),
                   ),
 
                   const SizedBox(height: 50),
@@ -133,7 +100,7 @@ class LoginPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: Text(
-                            'SNS 계정으로 간편 가입하기',
+                            'SNS 계정으로 가입하기',
                             style: TextStyle(color: Colors.grey[700]),
                           ),
                         ),
