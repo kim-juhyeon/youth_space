@@ -1,5 +1,6 @@
 # flutter_FacLAB
-
+- minSdkVersion 19
+- multiDexEnabled true
 - 공공 api 활용
 - XML parse
 - image,name : repository

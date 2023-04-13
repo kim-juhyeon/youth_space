@@ -69,12 +69,32 @@ class LoginPage extends StatelessWidget {
                   // forgot password?
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: Colors.grey[600]),
+                        SizedBox(
+                          height: 20,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: const Text(
+                              'Register now',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -132,6 +152,7 @@ class LoginPage extends StatelessWidget {
                       SquareTile(imagePath: 'assets/images/apple.png')
                     ],
                   ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),

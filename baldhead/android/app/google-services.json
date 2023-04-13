@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "589489314133",
+    "project_id": "boy-space-baldboy",
+    "storage_bucket": "boy-space-baldboy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589489314133:android:dee863efd01b0377d777dc",
+        "android_client_info": {
+          "package_name": "com.example.flutter_book_list"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589489314133-6va8hulftqgur8i10aefli5h6q2f5s5u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqH1OCqfeGF_vBQssnND9BPrmTTYFwVB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589489314133-6va8hulftqgur8i10aefli5h6q2f5s5u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "589489314133-446423kls8mtot7ul99kgfoh1fr6f1l3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterBookList"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
