@@ -1,4 +1,6 @@
 import 'package:baldhead/screens/future_secondscreen.dart';
+import 'package:baldhead/screens/view/loginpage/login_screen.dart';
+import 'package:baldhead/screens/view/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:baldhead/screens/list_screen.dart';
 
@@ -15,15 +17,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '대머리청년',
-      initialRoute: '/home',
+      title: 'bald young man',
+      initialRoute: '/onboarding',
       routes: {
+        '/onboarding': (context) => OnboardingScreen(),
+        '/login': (context) => LoginPage(),
         '/home': (context) => HomeScreen(),
         '/list': (context) => ListScreen(),
         '/detail': (context) {
-          //새화면 DetailScreen으로 이동할 때 경로에 전달 된 인수에 엑세스할 수 있게 ModalRoute 위젯이용
           final args = ModalRoute.of(context)?.settings.arguments as Space;
-          //DetailScreen에서 space 매개변수를 받아 정보를 표시 할 수 있음
           return DetailScreen(space: args);
         },
       },

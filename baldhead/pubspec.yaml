@@ -69,6 +69,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/
     - images/raw/
     - images/processed/list_img_01_80.png
     - images/processed/list_img_02_80.png
@@ -92,7 +93,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: Mulish
+      fonts:
+        - asset: assets/fonts/Mulish-Light.ttf
+        - asset: assets/fonts/Mulish-SemiBold.ttf
+    - family: Lora
+      fonts:
+        - asset: assets/fonts/Lora-Bold.ttf
+          style : italic
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
