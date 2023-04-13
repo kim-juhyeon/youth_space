@@ -1,4 +1,5 @@
 import 'package:baldhead/screens/future_secondscreen.dart';
+import 'package:baldhead/screens/view/loginpage/auth_page/login_auth.dart';
 import 'package:baldhead/screens/view/loginpage/login_screen.dart';
 import 'package:baldhead/screens/view/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'bald young man',
       initialRoute: '/onboarding',
       routes: {
+        '/auth': (context) => AuthPage(),
         '/onboarding': (context) => OnboardingScreen(),
         '/login': (context) => LoginPage(),
         '/home': (context) => HomeScreen(),
