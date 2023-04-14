@@ -1,6 +1,7 @@
 import 'package:baldhead/screens/home_screen/login_page/home2_wiget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'home_screen/home_imgview.dart';
 import 'home_screen/home_module/switch.dart';
@@ -65,7 +66,7 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: Icon(Icons.home),
+              icon: FaIcon(Icons.group_add),
               onPressed: () {
                 // code for home icon
               },
