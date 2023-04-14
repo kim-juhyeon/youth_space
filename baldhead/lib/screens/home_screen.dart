@@ -1,3 +1,4 @@
+import 'package:baldhead/screens/home_screen/login_page/home2_wiget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -37,19 +38,40 @@ class HomeScreen extends StatelessWidget {
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 12.0),
             sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                ImgView(
-                  imageWidth: imageWidth,
-                ),
-                SizedBox(height: 15.0),
-                SwitchHome(),
-                SizedBox(height: 20.0),
-                OthersWiget(),
-                SizedBox(height: 20.0),
-              ]),
+              delegate: SliverChildListDelegate(
+                [
+                  ImgView(
+                    imageWidth: imageWidth,
+                  ),
+                  SizedBox(height: 30.0),
+                  Center(child: SwitchHome()),
+                  OthersWiget(),
+                  OthersWiget2(),
+                ],
+              ),
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                // code for current location icon
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {
+                // code for home icon
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

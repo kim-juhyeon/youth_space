@@ -1,8 +1,8 @@
 import 'package:baldhead/screens/home_screen/login_page/square_tile.dart';
 import 'package:flutter/material.dart';
 
-class OthersWiget extends StatelessWidget {
-  const OthersWiget({Key? key}) : super(key: key);
+class OthersWiget2 extends StatelessWidget {
+  const OthersWiget2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,10 @@ class OthersWiget extends StatelessWidget {
                   '/list',
                 );
               },
-              child: SquareTile(imagePath: 'assets/images/spot.png'),
+              child: SquareTile(imagePath: 'assets/images/suit.png'),
             ),
             Text(
-              '청년공간',
+              '대여',
               style: TextStyle(fontSize: 12.0),
             ),
           ],
@@ -29,9 +29,9 @@ class OthersWiget extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SquareTile(imagePath: 'assets/images/library.png'),
+            SquareTile(imagePath: 'assets/images/rice.png'),
             Text(
-              '도서관',
+              '가성비 밥집',
               style: TextStyle(
                 fontSize: 12.0,
               ),
@@ -41,9 +41,9 @@ class OthersWiget extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SquareTile(imagePath: 'assets/images/tree.png'),
+            SquareTile(imagePath: 'assets/images/baldmoney.png'),
             Text(
-              '공원',
+              '정보',
               style: TextStyle(fontSize: 12.0),
             ),
           ],

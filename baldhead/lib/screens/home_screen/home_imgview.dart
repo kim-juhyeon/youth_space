@@ -1,40 +1,86 @@
 import 'package:flutter/material.dart';
 
-class ImgView extends StatelessWidget {
+class ImgView extends StatefulWidget {
   final double imageWidth;
-  const ImgView({super.key, required this.imageWidth});
+
+  const ImgView({Key? key, required this.imageWidth}) : super(key: key);
+
+  @override
+  _ImgViewState createState() => _ImgViewState();
+}
+
+//_imgViewState별도로 위제 정리 필요 (수정!)
+class _ImgViewState extends State<ImgView> {
+  int _currentPage = 0;
+
+  AnimatedContainer _buildDots({
+    int? index,
+  }) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200), //200밀리초로 변경시간을 늘림
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(
+          Radius.circular(50),
+        ),
+        color: Color.fromARGB(255, 20, 118, 69),
+      ),
+      margin: const EdgeInsets.only(right: 5),
+      height: 10,
+      curve: Curves.easeIn,
+      width: _currentPage == index ? 20 : 10,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 400,
-      child: PageView(
-        scrollDirection: Axis.horizontal,
-        //crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          Image.network(
-            'https://www.youthcenter.go.kr/framework/filedownload/richEditDownload.do?filePathName=L2F0dGFjaG1lbnQveW91dGhjZW50ZXIvcmljaGVkaXQvMjAyMy8wNC8xMS8yMDIzMDQxMTA5MjA1MzUwNC5wbmc=',
-            width: imageWidth,
-            height: double.infinity,
-            fit: BoxFit.cover,
+          Expanded(
+            child: PageView(
+              scrollDirection: Axis.horizontal,
+              onPageChanged: (int page) {
+                setState(() {
+                  _currentPage = page;
+                });
+              },
+              children: [
+                Image.asset(
+                  'assets/images/ad/image1.png',
+                  width: widget.imageWidth,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                Image.asset(
+                  'assets/images/ad/image2.png',
+                  width: widget.imageWidth,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                Image.asset(
+                  'assets/images/ad/image4.png',
+                  width: widget.imageWidth,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                Image.asset(
+                  'assets/images/ad/image5.png',
+                  width: widget.imageWidth,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ],
+            ),
           ),
-          Image.network(
-            'https://www.youthcenter.go.kr/framework/filedownload/richEditDownload.do?filePathName=L2F0dGFjaG1lbnQveW91dGhjZW50ZXIvcmljaGVkaXQvMjAyMy8wNC8xMC8yMDIzMDQxMDExMTMzNDA5OS5qcGc=',
-            width: imageWidth,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          Image.network(
-            'https://www.youthcenter.go.kr/framework/filedownload/getImage.do?filePathName=z5VpaHt9JBV54fwiQTLnrmKLnNao2Us55r%2Br4ff6IUHkEdL6z3REeGfuEnt88CMBLZorX7hKHtT1wNFH60sqag%3D%3D',
-            width: imageWidth,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          Image.network(
-            'https://www.kua.go.kr/common/directStaticImgView.do?filePath=GDo9Er9fb6byzHwxCsVmD8FS%2BJRfR93YpwwV0Y19AXc%3D&fileName=5W0EsmhihI7p92vvTZ4yV5wHxwqvWoxweGbfsbB61w6lA36wpwNx1F7u5JLAbbMm%2F%2FfYPHRfS5zdzVxkgZ5tiA%3D%3D&oriFileName=FwJklRIh5CCBnP2it4JRRQ%3D%3D',
-            width: imageWidth,
-            height: double.infinity,
-            fit: BoxFit.cover,
+          const SizedBox(height: 10),
+          //나중에 page index(lenght)에 따라 children 값이 변경해야 함(수정필요)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List<Widget>.generate(
+              4,
+              (int index) => _buildDots(index: index),
+            ),
           ),
         ],
       ),

@@ -1,4 +1,3 @@
-import 'package:baldhead/screens/home_screen/home_wiget.dart';
 import 'package:flutter/material.dart';
 
 class SwitchHome extends StatefulWidget {
@@ -31,8 +30,6 @@ class _SwitchHomeState extends State<SwitchHome> {
             const Text('3km 반경'),
           ],
         ),
-        const SizedBox(height: 10),
-        OthersWiget()
       ],
     );
   }
