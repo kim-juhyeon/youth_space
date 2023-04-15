@@ -121,12 +121,12 @@ class SignUpPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       // google button
-                      SquareTile(imagePath: 'assets/images/google.png'),
+                      SquareTile(imagePath: 'assets/images/kakao.png'),
 
                       SizedBox(width: 25),
 
                       // apple button
-                      SquareTile(imagePath: 'assets/images/apple.png')
+                      SquareTile(imagePath: 'assets/images/google.png')
                     ],
                   ),
                   const SizedBox(height: 10),
