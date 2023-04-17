@@ -16,7 +16,7 @@ class _AuthPageState extends State<AuthPage> {
       if (user == null) {
         Navigator.pushReplacementNamed(context, '/login');
       } else {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/name');
       }
     });
   }

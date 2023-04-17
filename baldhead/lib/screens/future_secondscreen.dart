@@ -70,7 +70,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   SizedBox(
                     width: 400,
                     height: 200,
-                    child: Image.asset(widget.space.image, fit: BoxFit.cover),
+                    child: Image.asset(widget.space.image1, fit: BoxFit.cover),
                   ),
                   Padding(
                     padding: EdgeInsets.all(10),

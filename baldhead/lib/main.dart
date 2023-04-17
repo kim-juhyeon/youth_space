@@ -1,6 +1,7 @@
 import 'package:baldhead/screens/future_secondscreen.dart';
 import 'package:baldhead/screens/view/loginpage/auth_page/login_auth.dart';
 import 'package:baldhead/screens/view/loginpage/login_screen.dart';
+import 'package:baldhead/screens/view/loginpage/name_screen.dart';
 import 'package:baldhead/screens/view/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:baldhead/screens/list_screen.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/auth': (context) => AuthPage(),
         '/onboarding': (context) => OnboardingScreen(),
         '/login': (context) => LoginPage(),
+        '/name': (context) => NameInputPage(),
         '/home': (context) => HomeScreen(),
         '/list': (context) => ListScreen(),
         '/detail': (context) {

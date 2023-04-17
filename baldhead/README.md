@@ -1,5 +1,5 @@
 # flutter_FacLAB
-- firebase cloud
+- firebase auth , database
 - minSdkVersion 19
 - multiDexEnabled true
 - 공공 api 활용

@@ -1,7 +1,7 @@
 import 'package:baldhead/screens/home_screen/login_page/my_button.dart';
 import 'package:baldhead/screens/home_screen/login_page/my_textfield.dart';
 import 'package:baldhead/screens/home_screen/login_page/square_tile.dart';
-import 'package:baldhead/screens/view/loginpage/register_screen.dart';
+import 'package:baldhead/screens/view/loginpage/name_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -119,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: emailController,
                     hintText: 'Username',
                     obscureText: false,
+                    maxLength: 12,
                   ),
 
                   const SizedBox(height: 10),
@@ -128,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: passwordController,
                     hintText: 'Password',
                     obscureText: true,
+                    maxLength: 12,
                   ),
 
                   const SizedBox(height: 10),
@@ -158,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => RegisterScreen()),
+                                      builder: (context) => NameInputPage()),
                                 );
                               },
                               child: const Text(
