@@ -5,6 +5,9 @@
 - 공공 api 활용
 - XML parse
 - image,name : repository
+- 라이언킹 bgm
+
+
 
 ## 데이터
 
