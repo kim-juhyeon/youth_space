@@ -1,4 +1,5 @@
-import 'package:baldhead/screens/view/sharepage/share_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FirstScreen extends StatefulWidget {
@@ -9,13 +10,25 @@ class FirstScreen extends StatefulWidget {
 }
 
 class _FirstScreenState extends State<FirstScreen> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final CollectionReference _shareCollection =
+      FirebaseFirestore.instance.collection('shares');
+
   String _title = '';
   String _category = '책 읽기';
   String _people = '5명 내외';
   String _description = '';
 
-  void _submit() {
-    // Handle submission of new task
+  void _submit() async {
+    final String userId = FirebaseAuth.instance.currentUser!.uid;
+    await _shareCollection.add({
+      'userId': userId,
+      'title': _title,
+      'category': _category,
+      'people': _people,
+      'description': _description,
+    });
+
     Navigator.of(context).pop();
   }
 
@@ -32,18 +45,7 @@ class _FirstScreenState extends State<FirstScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Sharescreen(
-                      title: _title,
-                      category: _category,
-                      people: _people,
-                      description: _description),
-                ),
-              );
-            },
+            onPressed: _submit,
             child: Text(
               '완료',
               style: TextStyle(

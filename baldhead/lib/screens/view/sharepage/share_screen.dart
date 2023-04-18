@@ -1,5 +1,6 @@
 import 'package:baldhead/screens/view/sharepage/dialog_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Sharescreen extends StatefulWidget {
@@ -21,6 +22,9 @@ class Sharescreen extends StatefulWidget {
 }
 
 class _SharescreenState extends State<Sharescreen> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final CollectionReference _shareCollection =
+      FirebaseFirestore.instance.collection('shares');
   //bool값으로 상태를 정리
   bool _showingDialog = false;
 
@@ -84,14 +88,16 @@ class _SharescreenState extends State<Sharescreen> {
               height: 10.0,
             ),
             StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('users').snapshots(),
+                stream: _shareCollection
+                    .where('userId',
+                        isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                    .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
                     return CircularProgressIndicator();
                   }
-                  final users = snapshot.data!.docs;
+                  final shares = snapshot.data!.docs;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -105,11 +111,11 @@ class _SharescreenState extends State<Sharescreen> {
                       ),
                       ListView.builder(
                         shrinkWrap: true,
-                        itemCount: users.length,
+                        itemCount: shares.length,
                         itemBuilder: (context, index) {
-                          final name = users[index]['name'];
+                          final share = shares[index];
                           return Text(
-                            name,
+                            share['title'],
                             style: TextStyle(fontSize: 16.0),
                           );
                         },
