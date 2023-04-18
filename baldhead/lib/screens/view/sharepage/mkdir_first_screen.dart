@@ -1,3 +1,4 @@
+import 'package:baldhead/screens/view/sharepage/share_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,17 @@ class _FirstScreenState extends State<FirstScreen> {
       'description': _description,
     });
 
-    Navigator.of(context).pop();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Sharescreen(
+          title: _title,
+          category: _category,
+          people: _people,
+          description: _description,
+        ),
+      ),
+    );
   }
 
   @override

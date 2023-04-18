@@ -27,6 +27,7 @@ class _SharescreenState extends State<Sharescreen> {
       FirebaseFirestore.instance.collection('shares');
   //bool값으로 상태를 정리
   bool _showingDialog = false;
+  List<String> _shareTitles = [];
 
   void _showDialog() {
     setState(() {
@@ -41,6 +42,22 @@ class _SharescreenState extends State<Sharescreen> {
       setState(() {
         _showingDialog = false;
       });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getShareData();
+  }
+
+  void _getShareData() async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final snapshot =
+        await _shareCollection.where('userId', isEqualTo: userId).get();
+    setState(() {
+      _shareTitles =
+          snapshot.docs.map((doc) => doc['title'] as String).toList();
     });
   }
 
