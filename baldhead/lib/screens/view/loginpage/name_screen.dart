@@ -108,7 +108,7 @@ class _NameInputPageState extends State<NameInputPage> {
                       final newusers = firestore.collection('users');
                       FirebaseAuth auth = FirebaseAuth.instance;
                       User? user = auth.currentUser;
-                      //기존에
+                      //기존에 로그인했던 auth값중 email값을 가져옴
 
                       if (user != null) {
                         String email = user.email!;
