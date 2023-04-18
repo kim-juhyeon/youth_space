@@ -33,8 +33,16 @@ class _FirstScreenState extends State<FirstScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Sharescreen()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Sharescreen(
+                      title: _title,
+                      category: _category,
+                      people: _people,
+                      description: _description),
+                ),
+              );
             },
             child: Text(
               '완료',
