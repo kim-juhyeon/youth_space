@@ -18,7 +18,7 @@ class Gesture_Screen extends StatelessWidget {
             builder: (BuildContext contex) {
               return AlertDialog(
                 title: Text('청년공간 홈페이지입니다.'),
-                content: Text('홈페이지로 들어갑니다~ 꽉 잡으세요.'),
+                content: Text('홈페이지로 들어갑니다'),
                 actions: [
                   TextButton(
                     onPressed: () {
