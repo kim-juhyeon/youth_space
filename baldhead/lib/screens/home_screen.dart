@@ -82,12 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Sharescreen(
-                      category: '',
-                      description: '',
-                      people: '',
-                      title: '',
-                    ),
+                    builder: (context) => Sharescreen(),
                   ),
                 );
               },

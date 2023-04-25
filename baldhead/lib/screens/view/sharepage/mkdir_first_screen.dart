@@ -33,12 +33,7 @@ class _FirstScreenState extends State<FirstScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => Sharescreen(
-          title: _title,
-          category: _category,
-          people: _people,
-          description: _description,
-        ),
+        builder: (context) => Sharescreen(),
       ),
     );
   }
