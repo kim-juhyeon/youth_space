@@ -112,9 +112,11 @@ class _NameInputPageState extends State<NameInputPage> {
 
                       if (user != null) {
                         String email = user.email!;
+                        String userId = user.uid;
                         newusers.add({
                           'name': _name,
                           'email': email,
+                          'userId': userId,
                         });
                       }
 

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 //차후에 당근마켓 처럼 위젯을 만들 필요있음
 class Dialogcreat extends StatelessWidget {
-  const Dialogcreat({Key? key}) : super(key: key);
+  final VoidCallback? onExitPressed;
+  const Dialogcreat({Key? key, this.onExitPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

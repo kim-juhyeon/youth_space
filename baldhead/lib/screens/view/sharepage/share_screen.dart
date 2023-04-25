@@ -30,13 +30,18 @@ class _SharescreenState extends State<Sharescreen> {
   List<String> _shareTitles = [];
 
   void _showDialog() {
+    if (_showingDialog) {
+      return;
+    }
     setState(() {
       _showingDialog = true;
     });
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Dialogcreat();
+        return Dialogcreat(onExitPressed: () {
+          Navigator.of(context).pop();
+        });
       },
     ).then((_) {
       setState(() {

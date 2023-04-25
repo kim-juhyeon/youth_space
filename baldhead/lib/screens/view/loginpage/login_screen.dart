@@ -13,7 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // text editing controllers
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
@@ -38,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       if (e.code == 'user-not-found') {
+        // 'user-not-found' 예외는 사용자 이메일 주소에 해당하는 계정이 Firebase Authentication에서 찾을 수 없을 때 발생합니다.
         wrongEmailMessage();
       } else if (e.code == 'wrong-password') {
         wrongPasswordMessage();
