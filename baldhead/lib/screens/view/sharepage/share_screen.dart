@@ -1,105 +1,90 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dialog_screen.dart';
+import 'package:provider/provider.dart';
 
-class Sharescreen extends StatefulWidget {
-  const Sharescreen({Key? key}) : super(key: key);
-
-  @override
-  _SharescreenState createState() => _SharescreenState();
-}
-
-class _SharescreenState extends State<Sharescreen> {
+// Define a class to hold the application state
+class ShareData extends ChangeNotifier {
   final CollectionReference _shareCollection =
       FirebaseFirestore.instance.collection('shares');
 
-  void _showDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialogcreat(onExitPressed: () {
-          Navigator.of(context).pop();
-        });
-      },
-    );
+  List<Map<String, dynamic>> _shares = [];
+
+  List<Map<String, dynamic>> get shares => _shares;
+//_shares 목록에 대한 모든 수정 사항이 자동으로 전파
+  void addShare(Map<String, dynamic> share) {
+    _shares.add(share);
+    _shareCollection.add(share);
+    notifyListeners();
   }
 
-  Future<String> getUserName(String userId) async {
-    try {
-      print('Getting user for ID $userId');
-      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .get();
-      if (userSnapshot.exists) {
-        String name =
-            (userSnapshot.data() as Map<String, dynamic>)['name'] ?? 'gg';
-
-        print('Got name "$name" for user ID $userId');
-        return name;
-      } else {
-        throw Exception('User not found for ID $userId');
-      }
-    } catch (e, stackTrace) {
-      print('Error getting user name: $e');
-      print(stackTrace);
-      return 'name';
-    }
+  void fetchShares() async {
+    final snapshot = await _shareCollection.get();
+    _shares =
+        snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    notifyListeners();
   }
+}
+
+class Sharescreen extends StatelessWidget {
+  const Sharescreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('bald'),
-        backgroundColor: Colors.lightGreen[400],
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-          stream: _shareCollection.snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) {
-              return CircularProgressIndicator();
-            }
-            final shares = snapshot.data!.docs;
-            return ListView.builder(
-              itemCount: shares.length,
-              itemBuilder: (context, index) {
-                final share = shares[index];
-                return ListTile(
-                  title: Text('Title: ${share['title']}'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Category: ${share['category']}'),
-                      Text('People: ${share['people']}'),
-                      Text('Description: ${share['description']}'),
-                      FutureBuilder<String>(
-                        future: share['userId'] != null
-                            ? getUserName(share['userId'])
-                            : Future.value(''),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<String> snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else {
-                            return Text('Name : ${snapshot.data}');
-                          }
-                        },
-                      )
-                    ],
-                  ),
-                );
+    return ChangeNotifierProvider(
+      create: (_) => ShareData()..fetchShares(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('모임'),
+          backgroundColor: Colors.lightGreen[400],
+        ),
+        body: ShareList(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialogcreat(onExitPressed: () {
+                  Navigator.of(context).pop();
+                });
               },
             );
-          }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showDialog,
-        child: Icon(Icons.add),
+          },
+          child: Icon(Icons.add),
+        ),
       ),
+    );
+  }
+}
+
+class ShareList extends StatelessWidget {
+  const ShareList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final shareData = Provider.of<ShareData>(context);
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: shareData.shares.length,
+            itemBuilder: (context, index) {
+              final share = shareData.shares[index];
+              return ListTile(
+                title: Text('제목: ${share['title']}'),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('항목: ${share['category']}'),
+                    Text('인원: ${share['people']}'),
+                    Text('설명: ${share['description']}'),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
