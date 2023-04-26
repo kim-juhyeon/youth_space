@@ -1,33 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:baldhead/models/share/share_data.dart';
 import 'package:flutter/material.dart';
 import 'dialog_screen.dart';
 import 'package:provider/provider.dart';
 
-// Define a class to hold the application state
-class ShareData extends ChangeNotifier {
-  final CollectionReference _shareCollection =
-      FirebaseFirestore.instance.collection('shares');
+class Sharescreen extends StatefulWidget {
+  const Sharescreen({Key? key}) : super(key: key);
 
-  List<Map<String, dynamic>> _shares = [];
-
-  List<Map<String, dynamic>> get shares => _shares;
-//_shares 목록에 대한 모든 수정 사항이 자동으로 전파
-  void addShare(Map<String, dynamic> share) {
-    _shares.add(share);
-    _shareCollection.add(share);
-    notifyListeners();
-  }
-
-  void fetchShares() async {
-    final snapshot = await _shareCollection.get();
-    _shares =
-        snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-    notifyListeners();
-  }
+  @override
+  State<Sharescreen> createState() => _SharescreenState();
 }
 
-class Sharescreen extends StatelessWidget {
-  const Sharescreen({Key? key}) : super(key: key);
+class _SharescreenState extends State<Sharescreen> {
+  final _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +19,19 @@ class Sharescreen extends StatelessWidget {
       create: (_) => ShareData()..fetchShares(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('모임'),
+          title: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: '찾고 싶은 모임은?',
+              border: InputBorder.none,
+              hintStyle: TextStyle(color: Colors.white54),
+            ),
+            style: TextStyle(color: Colors.white),
+            onChanged: (value) {
+              final searchData = Provider.of<ShareData>(context, listen: false);
+              searchData.searchShares(value);
+            },
+          ),
           backgroundColor: Colors.lightGreen[400],
         ),
         body: ShareList(),
@@ -78,6 +74,10 @@ class ShareList extends StatelessWidget {
                     Text('항목: ${share['category']}'),
                     Text('인원: ${share['people']}'),
                     Text('설명: ${share['description']}'),
+                    ElevatedButton(onPressed: () {}, child: Text('참여하기')),
+                    SizedBox(
+                      height: 10,
+                    )
                   ],
                 ),
               );
