@@ -59,13 +59,15 @@ class ShareList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shareData = Provider.of<ShareData>(context);
+    final filteredShares = shareData.filteredShares;
+
     return Column(
       children: [
         Expanded(
           child: ListView.builder(
-            itemCount: shareData.shares.length,
+            itemCount: filteredShares.length,
             itemBuilder: (context, index) {
-              final share = shareData.shares[index];
+              final share = filteredShares[index];
               return ListTile(
                 title: Text('제목: ${share['title']}'),
                 subtitle: Column(
@@ -75,9 +77,7 @@ class ShareList extends StatelessWidget {
                     Text('인원: ${share['people']}'),
                     Text('설명: ${share['description']}'),
                     ElevatedButton(onPressed: () {}, child: Text('참여하기')),
-                    SizedBox(
-                      height: 10,
-                    )
+                    SizedBox(height: 10),
                   ],
                 ),
               );
