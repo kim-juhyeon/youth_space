@@ -19,19 +19,19 @@ class _SharescreenState extends State<Sharescreen> {
       create: (_) => ItemProvider()..fetchItems(),
       child: Scaffold(
         appBar: AppBar(
-          title: TextField(
-            controller: _searchController,
-            decoration: InputDecoration(
-              hintText: '찾고 싶은 모임은?',
-              border: InputBorder.none,
-              hintStyle: TextStyle(color: Colors.white54),
+          title: Consumer<ItemProvider>(
+            builder: (context, itemProvider, _) => TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Search for meetings',
+                border: InputBorder.none,
+                hintStyle: TextStyle(color: Colors.white54),
+              ),
+              style: TextStyle(color: Colors.white),
+              onChanged: (value) {
+                itemProvider.search(value);
+              },
             ),
-            style: TextStyle(color: Colors.white),
-            onChanged: (value) {
-              final searchData =
-                  Provider.of<ItemProvider>(context, listen: false);
-              //searchData.searchShares(value);
-            },
           ),
           backgroundColor: Colors.lightGreen[400],
         ),
