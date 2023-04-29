@@ -10,6 +10,8 @@ class ShareData extends ChangeNotifier {
 
   List<Map<String, dynamic>> get shares => _shares;
   List<Map<String, dynamic>> get filteredShares => _filteredShares;
+
+  get length => null;
 //_shares 목록에 대한 모든 수정 사항이 자동으로 전파
   void addShare(Map<String, dynamic> share) {
     _shares.add(share);

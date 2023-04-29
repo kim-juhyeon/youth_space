@@ -16,7 +16,7 @@ class _SharescreenState extends State<Sharescreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => ShareData()..fetchShares(),
+      create: (_) => ItemProvider()..fetchItems(),
       child: Scaffold(
         appBar: AppBar(
           title: TextField(
@@ -28,8 +28,9 @@ class _SharescreenState extends State<Sharescreen> {
             ),
             style: TextStyle(color: Colors.white),
             onChanged: (value) {
-              final searchData = Provider.of<ShareData>(context, listen: false);
-              searchData.searchShares(value);
+              final searchData =
+                  Provider.of<ItemProvider>(context, listen: false);
+              //searchData.searchShares(value);
             },
           ),
           backgroundColor: Colors.lightGreen[400],
@@ -54,37 +55,47 @@ class _SharescreenState extends State<Sharescreen> {
 }
 
 class ShareList extends StatelessWidget {
-  const ShareList({super.key});
+  const ShareList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final shareData = Provider.of<ShareData>(context);
-    final filteredShares = shareData.filteredShares;
+    final itemProvider = Provider.of<ItemProvider>(context);
 
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: filteredShares.length,
-            itemBuilder: (context, index) {
-              final share = filteredShares[index];
-              return ListTile(
-                title: Text('제목: ${share['title']}'),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('항목: ${share['category']}'),
-                    Text('인원: ${share['people']}'),
-                    Text('설명: ${share['description']}'),
-                    ElevatedButton(onPressed: () {}, child: Text('참여하기')),
-                    SizedBox(height: 10),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ],
+    return FutureBuilder(
+      future: itemProvider.fetchItems(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: itemProvider.items.length,
+                itemBuilder: (context, index) {
+                  final item = itemProvider.items[index];
+                  return ListTile(
+                    title: Text('제목: ${item.title}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('항목: ${item.category}'),
+                        Text('인원: ${item.people}'),
+                        Text('설명: ${item.description}'),
+                        ElevatedButton(onPressed: () {}, child: Text('참여하기')),
+                        SizedBox(height: 10),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
