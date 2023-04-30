@@ -1,5 +1,8 @@
 import 'package:baldhead/models/share/share_data.dart';
+import 'package:baldhead/screens/view/chatpage/chat_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../../models/chat/chat_data.dart';
 import 'dialog_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +26,7 @@ class _SharescreenState extends State<Sharescreen> {
             builder: (context, itemProvider, _) => TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search for meetings',
+                hintText: '항목을 입력해주세요.',
                 border: InputBorder.none,
                 hintStyle: TextStyle(color: Colors.white54),
               ),
@@ -61,41 +64,54 @@ class ShareList extends StatelessWidget {
   Widget build(BuildContext context) {
     final itemProvider = Provider.of<ItemProvider>(context);
 
-    return FutureBuilder(
-      future: itemProvider.fetchItems(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        return Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: itemProvider.items.length,
-                itemBuilder: (context, index) {
-                  final item = itemProvider.items[index];
-                  return ListTile(
-                    title: Text('제목: ${item.title}'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('항목: ${item.category}'),
-                        Text('인원: ${item.people}'),
-                        Text('설명: ${item.description}'),
-                        ElevatedButton(onPressed: () {}, child: Text('참여하기')),
-                        SizedBox(height: 10),
-                      ],
-                    ),
-                  );
-                },
+    return itemProvider.items.isEmpty
+        ? Center(child: CircularProgressIndicator())
+        : Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: itemProvider.searchItem.isEmpty
+                      ? itemProvider.items.length
+                      : itemProvider.searchItem.length,
+                  itemBuilder: (context, index) {
+                    final item = itemProvider.searchItem.isEmpty
+                        ? itemProvider.items[index]
+                        : itemProvider.searchItem[index];
+                    return ListTile(
+                      title: Text('제목: ${item.title}'),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('항목: ${item.category}'),
+                          Text('인원: ${item.people}'),
+                          Text('설명: ${item.description}'),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatScreen(
+                                    chatdata: Provider.of<ChatProvider>(context)
+                                        .chatData,
+                                    onChatAdded: (chat) =>
+                                        Provider.of<ChatProvider>(context,
+                                                listen: false)
+                                            .addChat(chat),
+                                    chatData: [],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Text('참여'),
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        );
-      },
-    );
+            ],
+          );
   }
 }
