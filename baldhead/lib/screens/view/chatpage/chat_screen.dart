@@ -1,14 +1,11 @@
+import 'package:baldhead/models/%08chat/chat_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
-  final List<String> chatData;
   final Function(String) onChatAdded;
 
-  ChatScreen(
-      {super.key,
-      required this.chatData,
-      required this.onChatAdded,
-      required List<String> chatdata});
+  ChatScreen({super.key, required this.onChatAdded});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -20,15 +17,28 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Chat')),
+      appBar: AppBar(
+        title: Text('채팅'),
+        backgroundColor: Colors.green,
+      ),
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: widget.chatData.length,
-              itemBuilder: (context, index) {
-                final chat = widget.chatData[index];
-                return ListTile(title: Text(chat));
+            child: StreamBuilder<List<String>>(
+              stream: Provider.of<ChatProvider>(context).chatDataStream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                final chatData = snapshot.data!;
+                return ListView.builder(
+                  reverse: true,
+                  itemCount: chatData.length,
+                  itemBuilder: (context, index) {
+                    final chat = chatData[index];
+                    return ListTile(title: Text(chat));
+                  },
+                );
               },
             ),
           ),

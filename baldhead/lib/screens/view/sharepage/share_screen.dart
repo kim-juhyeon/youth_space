@@ -28,7 +28,8 @@ class _SharescreenState extends State<Sharescreen> {
               decoration: InputDecoration(
                 hintText: '항목을 입력해주세요.',
                 border: InputBorder.none,
-                hintStyle: TextStyle(color: Colors.white54),
+                hintStyle: TextStyle(
+                    color: Colors.white54, fontWeight: FontWeight.bold),
               ),
               style: TextStyle(color: Colors.white),
               onChanged: (value) {
@@ -82,7 +83,11 @@ class ShareList extends StatelessWidget {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('항목: ${item.category}'),
+                          Text(
+                            '항목: ${item.category}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14),
+                          ),
                           Text('인원: ${item.people}'),
                           Text('설명: ${item.description}'),
                           ElevatedButton(
@@ -91,18 +96,26 @@ class ShareList extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => ChatScreen(
-                                    chatdata: Provider.of<ChatProvider>(context)
-                                        .chatData,
                                     onChatAdded: (chat) =>
                                         Provider.of<ChatProvider>(context,
                                                 listen: false)
                                             .addChat(chat),
-                                    chatData: [],
                                   ),
                                 ),
                               );
                             },
-                            child: Text('참여'),
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              '참여',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
                           SizedBox(height: 10),
                         ],
